@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/oferta"
+            android:icon="@drawable/ic_tags1"
+            android:title="Ofertas" />
+        <item
+            android:id="@+id/categoria"
+            android:icon="@drawable/ic_category"
+            android:title="Categorias" />
+        <item
+            android:id="@+id/register"
+            android:icon="@drawable/ic_register"
+            android:title="Registro" />
+    </group>
+    <item android:title="More...">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/Profile"
+                    android:icon="@drawable/ic_person"
+                    android:title="Perfil" />
+                <item
+                    android:id="@+id/informacion"
+                    android:icon="@drawable/ic_info"
+                    android:title="Informacion" />
+            </group>
+        </menu>
+    </item>
+</menu>

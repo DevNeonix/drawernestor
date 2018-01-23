@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import com.example.root.navigation.Fragments.CategoriaFragment;
 import com.example.root.navigation.Fragments.InfoFragment;
@@ -31,6 +33,31 @@ public class MainActivity extends AppCompatActivity {
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.navview);
+
+        setFragmentByDefault();
+
+        drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                Toast.makeText(MainActivity.this, "Open", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                Toast.makeText(MainActivity.this, "Close", Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+
+            }
+        });
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -63,14 +90,10 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if (fragmentTransaction) {
-                    getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.content_frame, fragment)
-                            .commit();
-                    item.setChecked(true);
-                    getSupportActionBar().setTitle(item.getTitle());
+                   changeFragment(fragment, item);
                     drawerLayout.closeDrawers();
                 }
+
                 return true;
             }
         });
@@ -81,9 +104,18 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home);
-
     }
-
+    private void setFragmentByDefault() {
+        changeFragment(new OfertaFragment(), navigationView.getMenu().getItem(0));
+    }
+    private void changeFragment (Fragment fragment, MenuItem menuItem) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.content_frame, fragment)
+                .commit();
+        menuItem.setChecked(true);
+        getSupportActionBar().setTitle(menuItem.getTitle());
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 

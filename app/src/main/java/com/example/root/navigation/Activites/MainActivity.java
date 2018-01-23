@@ -1,6 +1,8 @@
 package com.example.root.navigation.Activites;
 
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -86,6 +88,22 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.register:
                         fragment = new RegistroFragment();
                         fragmentTransaction = true;
+                        break;
+                    case R.id.cerrarsesion:
+                        SharedPreferences preferences = getSharedPreferences("marcaideas", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("id", "");
+                        editor.putString("fullname", "");
+                        editor.putString("email", "");
+                        editor.putString("fecha_nacimiento", "");
+                        editor.putString("remember_token", "");
+                        // editor.putString("created_at", data.getCreated_at().toString());
+                        // editor.putString("updated_at", data.getUpdated_at().toString());
+                        // editor.putString("deleted_at", data.getDeleted_at().toString());
+                        editor.apply();
+                        Intent intent = new Intent(getApplicationContext(), LoginRegisterActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
                         break;
                 }
 

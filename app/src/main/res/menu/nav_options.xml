@@ -25,6 +25,10 @@
                     android:id="@+id/informacion"
                     android:icon="@drawable/ic_info"
                     android:title="Informacion" />
+                <item
+                    android:id="@+id/cerrarsesion"
+                    android:icon="@drawable/ic_exit"
+                    android:title="Cerrar Sesion" />
             </group>
         </menu>
     </item>

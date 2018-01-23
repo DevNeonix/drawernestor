@@ -1,6 +1,7 @@
 package com.example.root.navigation.Activites;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -26,11 +27,20 @@ public class LoginRegisterActivity extends AppCompatActivity {
     TextView tvRegister, tvIngresa;
     EditText etUsername, etPassword;
     CardView btnLogin;
+    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_register);
+        preferences = getSharedPreferences("marcaideas", MODE_PRIVATE);
+        if (preferences.getString("id", "").equals("")) {
+
+        } else {
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
 
         llLogin = findViewById(R.id.llLogin);
         llRegister = findViewById(R.id.llRegistro);
@@ -72,6 +82,16 @@ public class LoginRegisterActivity extends AppCompatActivity {
                         if (status == 201){
                             Users data = response.body();
                             Toast.makeText(getApplicationContext(), "Bienvenido " + data.getFullname(),Toast.LENGTH_SHORT).show();
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.putString("id", data.getId() + "");
+                            editor.putString("fullname", data.getFullname());
+                            editor.putString("email", data.getEmail());
+                            editor.putString("fecha_nacimiento", data.getFecha_nacimiento());
+                            editor.putString("remember_token", data.getRemember_token());
+                            // editor.putString("created_at", data.getCreated_at().toString());
+                            // editor.putString("updated_at", data.getUpdated_at().toString());
+                            // editor.putString("deleted_at", data.getDeleted_at().toString());
+                            editor.apply();
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
@@ -83,7 +103,7 @@ public class LoginRegisterActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<Users> call, Throwable t) {
-                        Toast.makeText(getApplicationContext(), "No se pudo ocnectar con el servidor intentelo mas tarde",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "No se pudo conectar con el servidor intentelo mas tarde",Toast.LENGTH_SHORT).show();
 
 
                     }

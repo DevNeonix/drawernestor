@@ -11,13 +11,13 @@ public class Users {
     int id;
     String fullname;
     String email;
-    Date fecha_nacimiento;
+    String fecha_nacimiento;
     String remember_token;
-    Date created_at;
-    Date updated_at;
-    Date deleted_at;
+    String created_at;
+    String updated_at;
+    String deleted_at;
 
-    public Users(int id, String fullname, String email, Date fecha_nacimiento, String remember_token, Date created_at, Date updated_at, Date deleted_at) {
+    public Users(int id, String fullname, String email, String fecha_nacimiento, String remember_token, String created_at, String updated_at, String deleted_at) {
         this.id = id;
         this.fullname = fullname;
         this.email = email;
@@ -52,11 +52,11 @@ public class Users {
         this.email = email;
     }
 
-    public Date getFecha_nacimiento() {
+    public String getFecha_nacimiento() {
         return fecha_nacimiento;
     }
 
-    public void setFecha_nacimiento(Date fecha_nacimiento) {
+    public void setFecha_nacimiento(String fecha_nacimiento) {
         this.fecha_nacimiento = fecha_nacimiento;
     }
 
@@ -68,27 +68,27 @@ public class Users {
         this.remember_token = remember_token;
     }
 
-    public Date getCreated_at() {
+    public String getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(Date created_at) {
+    public void setCreated_at(String created_at) {
         this.created_at = created_at;
     }
 
-    public Date getUpdated_at() {
+    public String getUpdated_at() {
         return updated_at;
     }
 
-    public void setUpdated_at(Date updated_at) {
+    public void setUpdated_at(String updated_at) {
         this.updated_at = updated_at;
     }
 
-    public Date getDeleted_at() {
+    public String getDeleted_at() {
         return deleted_at;
     }
 
-    public void setDeleted_at(Date deleted_at) {
+    public void setDeleted_at(String deleted_at) {
         this.deleted_at = deleted_at;
     }
 }

@@ -38,29 +38,6 @@ public class MainActivity extends AppCompatActivity {
 
         setFragmentByDefault();
 
-        drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
-            @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {
-
-            }
-
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                Toast.makeText(MainActivity.this, "Open", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                Toast.makeText(MainActivity.this, "Close", Toast.LENGTH_SHORT).show();
-
-            }
-
-            @Override
-            public void onDrawerStateChanged(int newState) {
-
-            }
-        });
-
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -108,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if (fragmentTransaction) {
-                   changeFragment(fragment, item);
+                    changeFragment(fragment, item);
                     drawerLayout.closeDrawers();
                 }
 
@@ -123,10 +100,12 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home);
     }
+
     private void setFragmentByDefault() {
         changeFragment(new OfertaFragment(), navigationView.getMenu().getItem(0));
     }
-    private void changeFragment (Fragment fragment, MenuItem menuItem) {
+
+    private void changeFragment(Fragment fragment, MenuItem menuItem) {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.content_frame, fragment)
@@ -134,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
         menuItem.setChecked(true);
         getSupportActionBar().setTitle(menuItem.getTitle());
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -144,5 +124,17 @@ public class MainActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private long back_pressed = 0;
+
+    @Override
+    public void onBackPressed() {
+        if (back_pressed + 1000 > System.currentTimeMillis()) {
+            super.onBackPressed();
+        } else {
+            Toast.makeText(getBaseContext(), "Presiona dos veces para salir!!", Toast.LENGTH_SHORT).show();
+        }
+        back_pressed = System.currentTimeMillis();
     }
 }

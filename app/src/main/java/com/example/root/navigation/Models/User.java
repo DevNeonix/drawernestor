@@ -6,7 +6,7 @@ import java.util.Date;
  * Created by root on 21/01/18.
  */
 
-public class Users {
+public class User {
 
     int id;
     String fullname;
@@ -16,8 +16,9 @@ public class Users {
     String created_at;
     String updated_at;
     String deleted_at;
+    String url_image;
 
-    public Users(int id, String fullname, String email, String fecha_nacimiento, String remember_token, String created_at, String updated_at, String deleted_at) {
+    public User(int id, String fullname, String email, String fecha_nacimiento, String remember_token, String created_at, String updated_at, String deleted_at, String url_image) {
         this.id = id;
         this.fullname = fullname;
         this.email = email;
@@ -26,6 +27,7 @@ public class Users {
         this.created_at = created_at;
         this.updated_at = updated_at;
         this.deleted_at = deleted_at;
+        this.url_image = url_image;
     }
 
     public int getId() {
@@ -90,5 +92,13 @@ public class Users {
 
     public void setDeleted_at(String deleted_at) {
         this.deleted_at = deleted_at;
+    }
+
+    public String getUrl_image() {
+        return url_image;
+    }
+
+    public void setUrl_image(String url_image) {
+        this.url_image = url_image;
     }
 }

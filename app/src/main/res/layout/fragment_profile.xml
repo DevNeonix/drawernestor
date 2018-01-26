@@ -27,7 +27,7 @@
                     android:layout_height="150dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="45dp"
-                    android:src="@drawable/photocercle2" />
+                    android:src="@drawable/photocercle" />
 
                 <TextView
                     android:layout_width="wrap_content"

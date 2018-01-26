@@ -17,8 +17,9 @@ public class User {
     String updated_at;
     String deleted_at;
     String url_image;
+    String password;
 
-    public User(int id, String fullname, String email, String fecha_nacimiento, String remember_token, String created_at, String updated_at, String deleted_at, String url_image) {
+    public User(int id, String fullname, String email, String fecha_nacimiento, String remember_token, String created_at, String updated_at, String deleted_at, String url_image, String password) {
         this.id = id;
         this.fullname = fullname;
         this.email = email;
@@ -28,6 +29,7 @@ public class User {
         this.updated_at = updated_at;
         this.deleted_at = deleted_at;
         this.url_image = url_image;
+        this.password = password;
     }
 
     public int getId() {
@@ -100,5 +102,13 @@ public class User {
 
     public void setUrl_image(String url_image) {
         this.url_image = url_image;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

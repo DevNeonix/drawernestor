@@ -1,8 +1,7 @@
 package com.example.root.navigation.services;
 
-import com.example.root.navigation.Models.Login;
+import com.example.root.navigation.Models.RUser;
 import com.example.root.navigation.Models.RespuestaGenerica;
-import com.example.root.navigation.Models.User;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -14,5 +13,5 @@ import retrofit2.http.POST;
 
 public interface RegisterUser {
     @POST("users")
-    Call<RespuestaGenerica> register(@Body User user);
+    Call<RespuestaGenerica> register(@Body RUser user);
 }

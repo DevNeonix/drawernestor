@@ -22,9 +22,7 @@ import com.example.root.navigation.R;
 import com.example.root.navigation.services.API;
 import com.example.root.navigation.services.LoginServices;
 import com.example.root.navigation.services.RegisterUser;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import com.example.root.navigation.Models.RUser;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -89,7 +87,7 @@ public class LoginRegisterActivity extends AppCompatActivity {
                     public void onResponse(Call<User> call, Response<User> response) {
                         dialog.dismiss();
                         int status = response.code();
-                        if (status == 201) {
+                        if (status == 200) {
                             User data = response.body();
                             Toast.makeText(getApplicationContext(), "Bienvenido " + data.getFullname(), Toast.LENGTH_SHORT).show();
                             SharedPreferences.Editor editor = preferences.edit();
@@ -124,9 +122,9 @@ public class LoginRegisterActivity extends AppCompatActivity {
     }
 
     private void dialogBinding(final Dialog dialog) {
-        EditText input_name = dialog.findViewById(R.id.input_name);
-        EditText input_email = dialog.findViewById(R.id.input_email);
-        EditText input_password = dialog.findViewById(R.id.input_password);
+        final EditText input_name = dialog.findViewById(R.id.input_name);
+        final EditText input_email = dialog.findViewById(R.id.input_email);
+        final EditText input_password = dialog.findViewById(R.id.input_password);
         Button btn_signup = dialog.findViewById(R.id.btn_signup);
         TextView tvIngresa = dialog.findViewById(R.id.tvIngresa);
         tvIngresa.setOnClickListener(new View.OnClickListener() {
@@ -137,42 +135,32 @@ public class LoginRegisterActivity extends AppCompatActivity {
         });
 
         Retrofit myRetrofit = API.myRetrofit;
-        RegisterUser myService = myRetrofit.create(RegisterUser.class);
-        final Call<RespuestaGenerica> response = myService.register(new User(0,
-                input_name.getText().toString(),
-                input_email.getText().toString(),
-                new SimpleDateFormat("yyyy-MM-dd").format(new Date()),
-                "",
-                null,
-                null,
-                null,
-                "",
-                input_password.getText().toString()
-        ));
+        final RegisterUser myService = myRetrofit.create(RegisterUser.class);
+
         btn_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                 response.enqueue(new Callback<RespuestaGenerica>() {
-                    @Override
-                    public void onResponse(Call<RespuestaGenerica> call, Response<RespuestaGenerica> response) {
-                        Log.e("status Servicio", response.code() +"");
-                        if (response.code() == 401) {
-                            //
-                            Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                        } else  if (response.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                            dialog.dismiss();
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Este Usuario ya esta Registrado", Toast.LENGTH_SHORT).show();
+                if (input_email.getText().equals("") || input_name.getText().equals("") || input_password.getText().equals("")) {
+                    Toast.makeText(LoginRegisterActivity.this, "Ingresa los datos correctamente.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Call<RespuestaGenerica> res = myService.register(new RUser(input_name.getText().toString(), input_email.getText().toString(), input_password.getText().toString()));
+                    res.enqueue(new Callback<RespuestaGenerica>() {
+                        @Override
+                        public void onResponse(Call<RespuestaGenerica> call, Response<RespuestaGenerica> response) {
+                            if (response.code() == 201) {
+                                Toast.makeText(LoginRegisterActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                            } else if (response.code() == 400) {
+                                Toast.makeText(LoginRegisterActivity.this, "Este email ya esta registrado.", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<RespuestaGenerica> call, Throwable t) {
-                        Toast.makeText(getApplicationContext(), "No se pudo establecer conexion", Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<RespuestaGenerica> call, Throwable t) {
+                            Toast.makeText(LoginRegisterActivity.this, "no se pudo establecer conexion con el servidor", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             }
         });
 

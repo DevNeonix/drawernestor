@@ -29,6 +29,14 @@
                     android:id="@+id/cerrarsesion"
                     android:icon="@drawable/ic_exit"
                     android:title="Cerrar Sesion" />
+                <item
+                    android:id="@+id/m_crearcuenta"
+                    android:icon="@drawable/ic_person"
+                    android:title="Registrate" />
+                <item
+                    android:id="@+id/m_login"
+                    android:icon="@drawable/ic_info"
+                    android:title="Iniciar Sesión" />
             </group>
         </menu>
     </item>
